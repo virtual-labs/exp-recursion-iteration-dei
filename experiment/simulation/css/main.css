@@ -1,1 +1,938 @@
-/* You CSS goes in here */
+/* Explanation beside code area in recursion mode */
+.code-state-row.recursion-mode {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+
+/* Inline explanation for code lines in recursion mode */
+.inline-explanation {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 18px;
+  font-size: 0.82em;
+  color: #2a3a4a;
+  background: #f8fafd;
+  border-left: 3px solid #b3c6e0;
+  padding: 1px 8px 1px 10px;
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+  max-width: 340px;
+  word-break: break-word;
+}
+
+.codeExplanation-side[style*="display:none"] {
+  display: none !important;
+}
+/* Layout skeleton */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #b5bbc8, #eaebf1);
+  color: #e5e7eb;
+}
+
+/* Mode Selection Screen */
+#modeSelection {
+  min-height: 100vh;
+  /* Use viewport height for both standalone and embedded */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  /* Internal scroll if parent too small */
+}
+
+#modeSelectionContainer {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+#modeSelectionContainer h1 {
+  margin: 0 0 10px 0;
+  color: #000000;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+#modeSelectionContainer p {
+  margin: 0 0 30px 0;
+  color: #555555;
+  font-size: 1.1rem;
+}
+
+#modeButtons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.modeBtn {
+  background: #2980b9;
+  /* Sober Blue */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.modeBtn:hover {
+  background: #3498db;
+  transform: translateY(-2px);
+}
+
+.modeBtn:active {
+  transform: translateY(-2px);
+}
+
+.modeIcon {
+  font-size: 3rem;
+}
+
+.modeTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.modeDesc {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+
+/* Centered main container using full viewport height */
+#mainContainer {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  
+  
+}
+
+#container {
+  width: 100%;
+  max-width: 1300px;
+  flex: 1;
+  /* Grow to fill available space */
+  min-height: 700px;
+  max-height: 500px;
+  /* Allow flexbox shrinking */
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  /* Internal scroll for content */
+  margin: 50px;
+}
+
+#backToModeSelection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #4360df;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+  position:absolute;
+  left: 5px;
+  top: 5px;
+  font-size: small;
+}
+
+#backToModeSelection:hover {
+  background: #5568d3;
+}
+
+#currentModeDisplay {
+  color: #000000;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+#topPane label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  padding: 3px 5px;
+  cursor: pointer;
+  background: #ffffff;
+  transition: background 0.2s, border-color 0.2s;
+  color:black;
+  font-weight: 500;
+}
+
+#topPane input[type="radio"] {
+  accent-color: #e20000;
+}
+
+#topPane input[type="radio"]:checked + span {
+  font-weight: 600;
+}
+
+/* Main pane */
+#mainPane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.pane {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Left & right panels */
+.leftPanel {
+  flex: 0 0 34%;
+  padding-right: 16px;
+  border-right: 1px solid rgba(31, 41, 55, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: white;
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.leftPanel h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  color:black;
+}
+
+/* Sub-tabs (Iterative / Recursive) */
+.subTabs {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: #ffff;
+  gap:8px;
+ 
+
+}
+
+.subTabBtn {
+  border: none;
+  background: transparent;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  color: black;
+  transition: background 0.2s, color 0.2s;
+   border: 1px solid blue
+}
+
+.subTabBtn.active {
+  background: #002cdb;
+  color: #e5e7eb;
+}
+
+/* Controls */
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+  background-color: white;
+
+}
+
+.controlGroup label {
+  font-size: 0.8rem;
+  color: black;
+}
+
+.controlGroup input,
+.controlGroup select {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 96, 249, 0.9);
+  padding: 6px 8px;
+  color: black;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.controlGroup input:focus,
+.controlGroup select:focus {
+  border-color: #3b82f6;
+}
+
+.controlGroup small {
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* Buttons row */
+.buttonsRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.buttonsRow button {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 999px;
+  border: 1px solid blue;
+  background: #ffffff;
+  color: black;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+}
+
+.buttonsRow button:hover {
+  background: #ffffff;
+  color:black;
+}
+
+.buttonsRow button:active {
+  transform: scale(0.97);
+}
+
+.buttonsRow button:nth-child(1) {
+  background: #345fd6;
+  color:white;
+}
+
+.buttonsRow button:nth-child(1):hover {
+  background: #003cbe;
+  color:white
+}
+
+/* Status boxes */
+.statusBox {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgb(255, 255, 255);
+  border: 1px solid rgba(55, 65, 81, 0.9);
+  font-size: 0.78rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color:black;
+}
+
+.statusBox p {
+  margin: 2px 0 0;
+  color: #000000;
+}
+
+/* Right panels */
+.rightPanel {
+  flex: 1;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.rightPanel h4 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  color:black;
+}
+
+/* Visualization containers */
+.visContainer {
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.visContainer.active {
+  display: flex;
+}
+
+.visInfoRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #000000;
+  margin-bottom: 6px;
+}
+
+/* Iterative array */
+.fib-array {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;   
+
+  gap: 6px;
+  row-gap: 6px;
+
+  overflow-y: auto;
+  padding: 10px;
+}
+
+#fib-array-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+
+
+.fib-cell {
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 10px;
+  border: 2px solid black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  background: #ffffff;
+  color: #111827;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+  opacity: 0;
+  transform: translateY(6px) scale(0.92);
+  transition:
+    opacity 120ms linear,
+    transform 220ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+  will-change: transform, opacity;
+}
+
+.fib-cell.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+
+.fib-cell .index {
+  font-size: 0.65rem;
+  color: #000000;
+}
+
+.fib-cell:last-child {
+  border-color: #00d103;
+  color: #00a800;
+}
+
+
+.fib-cell:nth-last-child(2),
+.fib-cell:nth-last-child(3) {
+  border-color: #2563eb;
+  color: #1d4ed8;
+}
+
+.tree {
+  flex: 1;
+  border-radius: 12px;
+  border: 1px solid rgba(31, 41, 55, 0.95);
+  background: white;
+
+  padding: 2px;
+  box-sizing: border-box;
+
+  display: flex;                /* ✅ */
+  justify-content: center;      /* horizontal center */
+  align-items: center;          /* vertical center */
+
+  position: relative;
+  overflow: auto;               /* allow scrolling if tree is large */
+}
+
+
+.tree svg {
+  display: block;
+  max-width: 100%;
+  max-height: 80%;
+}
+
+
+
+.levelInfo {
+  padding-top: 4px;
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+/* Code walkthrough layout */
+.codePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Row for code + iterative state */
+.code-state-row {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: stretch;
+}
+
+/* ================= Code Container ================= */
+.codeArea {
+  flex: 1 1 auto;
+  max-width: 430px;
+  border-radius: 8px;
+  border: 1px solid black;
+  background: white;
+  height: 260px;
+  overflow: visible;
+  display: block;
+  transition: all 0.2s;
+}
+
+/* When in recursion mode, code area takes full width and minimal height */
+.codeArea.recursive-mode {
+  max-width: 100%;
+  width: 100%;
+  height: 170px;
+}
+
+
+/* ================= Code Block ================= */
+.code-block {
+  margin: 0;
+  padding: 10px 12px;
+
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+
+  font-size: 0.72rem;
+  line-height: 1.4;
+
+  white-space: pre;
+  overflow-x: auto;
+
+  width: 100%;
+  color: #111827;
+
+  display: none;
+}
+
+.code-block.active {
+  display: block;
+}
+
+
+/* ================= Code Lines ================= */
+.code-line {
+  display: block;
+  padding-left: 12px;             /* arrow space */
+  position: relative;
+  border-radius: 3px;
+}
+
+
+.code-line.active {
+  background: linear-gradient(
+    to right,
+    rgba(250, 204, 21, 0.45),
+    rgba(250, 204, 21, 0.15)
+  );
+  color: #713f12;
+}
+
+/* ➜ execution arrow */
+.code-line.active::before {
+  content: "➜";
+  position: absolute;
+  left: 2px;
+  color: #ca8a04;
+  font-weight: 700;
+}
+
+/* Comments */
+.code-line.comment {
+  color: #6b7280;
+  font-style: italic;
+}
+
+
+/* State area (variables + stack) */
+.stateArea {
+  flex-direction: column;
+  gap: 0px;
+  height: 350px;
+  
+}
+
+.stateBox {
+  flex: 1;
+  background: white;
+  font-size: 0.76rem;
+  display: none;    
+}
+
+.stateBox.active {
+  display: block;
+}
+
+.stateBox table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+
+.stateBox th,
+.stateBox td {
+  padding: 3px 4px;
+  color:black;
+}
+
+.stateBox th {
+  text-align: left;
+  color: #000000;
+  font-weight: 500;
+}
+
+.inlineInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color:black;
+}
+
+
+/* -------------------------------------------------------*/
+#iterativeState {
+  background: #ffffff;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 0.85rem;
+  color: #0f172a;
+  margin-top: 0;
+  flex: 0 0 auto;
+  width: 400px; /* Increased from 180px to 280px */
+  height: 260px;
+}
+
+#iterativeStateHeader {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* Variable table */
+#iterativeStateTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+}
+
+#iterativeStateTable td {
+  padding: 5px 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.8rem;
+}
+
+#iterativeStateTable td:first-child {
+  width: 60%;
+  font-family: monospace;
+  color: #000916;
+  background: #f8fafc;
+}
+
+#iterativeStateTable td:last-child {
+  text-align: center;
+  font-weight: 600;
+  background: #ffffff;
+  width: 40%;
+}
+
+
+/* Highlighted return value */
+#iterativeStateResult {
+  margin-top: 4px;
+  padding: 6px 0;
+  text-align: center;
+  background: #f8fafc;
+  border-radius: 6px;
+  border: 1px dashed #94a3b8;
+}
+
+#iterativeStateResult .label {
+  display: block;
+  font-size: 0.65rem;
+  color: #6366f1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+#iterativeStateResult .value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+#iterativeState .flash-change {
+  animation: iterFlash 550ms ease-in-out;
+}
+
+@keyframes iterFlash {
+  0% {
+    color: #0f172a;
+    font-weight: 500;
+    background-color: transparent;
+  }
+  30% {
+    color: #16a34a;           /* soft green */
+    font-weight: 600;
+    background-color: #dcfce7;
+  }
+  70% {
+    color: #16a34a;
+    font-weight: 600;
+    background-color: #dcfce7;
+  }
+  100% {
+    color: #0f172a;
+    font-weight: 500;
+    background-color: transparent;
+  }
+}
+
+
+/* Variable name styling */
+#iterativeState .var-name {
+  font-family: monospace;
+  color: black;
+}
+
+
+
+
+
+
+/* ================= STACK CONTAINER ================= */
+.stackContainer {
+  border-radius: 12px;
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  background: #f8fafc;
+  padding: 4px 6px;
+
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  min-height: 0%;
+  max-height: 100%;
+}
+
+#stack-heading{
+  margin: 3px;
+}
+
+/* ================= STACK FRAME ================= */
+.stackFrame {
+  padding: 6px 8px;
+  border-radius: 10px;
+
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 1);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: #0f172a;
+
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  
+}
+
+/* ================= CURRENT FRAME ================= */
+.stackFrame.current {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35);
+  font-weight: 600;
+}
+
+/* ================= STACK TEXT ================= */
+.stackFrame span:first-child {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  color: #1e293b;
+}
+
+.stackFrame span:last-child {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+/* ================= SCROLLBAR (OPTIONAL, NICE) ================= */
+.stackContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.stackContainer::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+
+.stackContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Small-screen fallback (still tries to avoid scrolling) */
+@media (max-width: 900px) {
+  #container {
+    padding: 12px;
+  }
+
+  .pane {
+    flex-direction: column;
+  }
+
+  .leftPanel {
+    flex: 0 0 auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+    padding-right: 0;
+    padding-bottom: 8px;
+  }
+
+  .rightPanel {
+    padding-left: 0;
+    padding-top: 8px;
+  }
+
+  .codePanel {
+    flex-direction: column;
+  }
+}
+
+/* Code walkthrough recursive tree */
+#codeRecTree {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border:0;
+
+  
+}
+
+#codeRecTree svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+#partition-div{
+  height: 1px;
+  width: full;
+  margin-top: 20px;
+  background-color: grey;
+}
+
+[hidden]{
+  display: none !important;
+}
+
+/* Iterative Array Container for Code Walkthrough */
+.iterArrayBox {
+  margin-top: 10px;
+  padding: 15px;
+  border: 1px solid rgba(31, 41, 55, 0.9);
+  border-radius: 10px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.iterArrayBox h4 {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  color: black;
+  text-align: center;
+}
+
+.iterArrayBox .visInfoRow {
+  justify-content: center;
+}
+
+.iterArrayBox .fib-array {
+  min-height: 60px;
+  max-height: 150px;
+  padding: 8px;
+  justify-content: center;
+}
+
+.iterArrayBox .fib-cell.current {
+  border-color: #f59e0b;
+  background: #fef3c7;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
