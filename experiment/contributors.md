@@ -1,7 +1,7 @@
 ### Subject Matter Experts
 | SNo. | Name | Email | Institute
 | :---: | :---: | :---: | :---: |
-| 1 | Dr. V Prem Prakash | vpremvpremprakash@dei.ac.in | Dayalbagh Educational Institute |
+| 1 | Dr. V Prem Prakash | vpremprakash@dei.ac.in | Dayalbagh Educational Institute |
 
 ### Developers
 | SNo. | Name | Email | Institute | ID |

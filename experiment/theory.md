@@ -42,6 +42,8 @@ There are two commonly used programming approaches:
 
 Each approach has its own advantages and disadvantages.
 
+**Dynamic programming bridges these two approaches** by combining recursive problem decomposition with iterative-style reuse of previously computed results (memoization/tabulation).
+
 ---
 
 ## 4. Iterative Approach
@@ -59,6 +61,12 @@ It calculates each Fibonacci number step-by-step and stores only the required va
 ### Pseudocode
 ```
 
+FibonacciIterative(n):
+  if n == 0:
+    return 0
+  if n == 1:
+    return 1
+
 a ← 0  
 b ← 1  
 
@@ -67,6 +75,8 @@ for i ← 2 to n do
    a ← b  
    b ← c  
 end for
+
+return b   // nth Fibonacci number
 
 
 ```
@@ -110,11 +120,21 @@ F(n):
 
 ```
 
-### Flowchart: Recursive Fibonacci
+### Recursion Tree: Recursive Fibonacci
 
-![Recursive Fibonacci Flowchart](images/rec_flowchart.png)
+```text
+F(4)
+├── F(3)
+│   ├── F(2)
+│   │   ├── F(1) = 1
+│   │   └── F(0) = 0
+│   └── F(1) = 1
+└── F(2)
+  ├── F(1) = 1
+  └── F(0) = 0
+```
 
-*The flowchart shows the recursive logic for F(4): checking base cases (n=0 or n=1) and recursively calling the function for (n-1) and (n-2) to compute the result.*
+*The recursion tree for F(4) shows repeated subproblems (for example, F(2) is computed multiple times), which causes inefficiency in naive recursion.*
 
 ### Advantages
 - Simple and close to mathematical definition
@@ -132,9 +152,10 @@ F(n):
 | Feature | Iterative Approach | Recursive Approach |
 |---------|-------------------|-------------------|
 | **Execution Speed** | Fast – computes each term once in a single pass | Slow – recalculates the same subproblems multiple times |
-| **Time Complexity** | O(n) – linear growth with input size | O(2ⁿ) – exponential growth due to overlapping subproblems |
+| **Time Complexity** | O(n) – linear growth with input size | Θ(φⁿ) where φ ≈ 1.618 – exponential growth due to overlapping subproblems |
 | **Space Complexity** | O(1) – uses only a fixed number of variables | O(n) – requires stack space proportional to recursion depth |
 | **Memory Usage** | Low – no additional stack frames needed | High – each recursive call adds a new frame to the call stack |
+| **Risk of Integer Overflow** | Present for very large n with fixed-size integer types | Present for very large n with fixed-size integer types |
 | **Risk of Stack Overflow** | None – no recursion involved | High – deep recursion for large n can exceed stack limit |
 | **Scalability** | Highly scalable for large values of n | Not scalable – becomes impractical for n > 30–40 |
 | **Function Call Overhead** | None – all computation happens within a single function | Significant – each call incurs overhead for stack management |
@@ -145,7 +166,8 @@ F(n):
 
 - **For practical applications**, the iterative method is almost always preferred due to its efficiency and predictable performance.
 - **For educational purposes**, the recursive method helps students understand the concept of breaking problems into smaller subproblems.
-- **Optimization techniques** like memoization can improve recursive performance to O(n), but still carry stack overhead compared to iteration.
+- **Dynamic programming acts as a bridge** between recursion and iteration: memoization preserves recursive thinking, while tabulation follows an iterative build-up.
+- **Optimization techniques** like memoization can improve recursive performance to O(n), though recursive memoization may still carry stack overhead compared to pure iteration.
 
 ---
 
@@ -158,10 +180,14 @@ F(n):
   Only a few variables are used, regardless of the value of `n`.
 
 ### Recursive Method (Naive)
-- **Time Complexity:** `O(2ⁿ)`  
-  Each function call makes two more calls, leading to an exponential number of repeated calculations.
+- **Time Complexity:** `Θ(φⁿ)` where `φ = (1 + √5)/2 ≈ 1.618`  
+  The number of recursive calls grows exponentially and is more tightly bounded by powers of the golden ratio than by `2ⁿ`.
 - **Space Complexity:** `O(n)`  
   The maximum recursion depth is `n`, so the call stack grows linearly with `n`.
+
+### Practical Limitation: Integer Overflow
+- With fixed-width integer types (for example, 32-bit or 64-bit), values eventually exceed the maximum representable limit.
+- For large `n`, use big integer libraries/types (such as `BigInt`) to avoid overflow.
 
 ---
 

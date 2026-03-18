@@ -136,8 +136,6 @@ body {
   align-items: flex-start;
   justify-content: center;
   padding: 18px;
-  
-  
 }
 
 #container {
@@ -838,14 +836,18 @@ body {
   background: transparent;
 }
 
-/* Small-screen fallback (still tries to avoid scrolling) */
-@media (max-width: 900px) {
+/* Tablet and below */
+@media (max-width: 1024px) {
   #container {
-    padding: 12px;
+    margin: 10px;
+    padding: 16px;
+    min-height: 0;
+    max-height: none;
   }
 
   .pane {
     flex-direction: column;
+    overflow: visible;
   }
 
   .leftPanel {
@@ -853,16 +855,165 @@ body {
     border-right: none;
     border-bottom: 1px solid rgba(31, 41, 55, 0.9);
     padding-right: 0;
-    padding-bottom: 8px;
+    padding-bottom: 12px;
+    max-height: none;
   }
 
   .rightPanel {
     padding-left: 0;
-    padding-top: 8px;
+    padding-top: 12px;
+    overflow: visible;
   }
 
   .codePanel {
     flex-direction: column;
+  }
+
+  .code-state-row,
+  .code-state-row.recursion-mode {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .codeArea {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    min-height: 220px;
+  }
+
+  .codeArea.recursive-mode {
+    height: auto;
+    min-height: 170px;
+  }
+
+  #iterativeState {
+    width: 100%;
+    height: auto;
+  }
+
+  .stateArea {
+    height: auto;
+    min-height: 260px;
+  }
+
+  #codeRecTree {
+    min-height: 280px;
+  }
+
+  #stack-container {
+    max-height: 240px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  #modeSelection {
+    padding: 12px;
+  }
+
+  #modeSelectionContainer {
+    padding: 22px 16px;
+  }
+
+  #modeButtons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .modeBtn {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #mainContainer {
+    padding: 8px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #container {
+    margin: 0;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  #backToModeSelection {
+    position: sticky;
+    top: 8px;
+    left: auto;
+    z-index: 10;
+    align-self: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .leftPanel,
+  .rightPanel {
+    padding: 0;
+  }
+
+  .buttonsRow {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .buttonsRow button {
+    flex: 1 1 120px;
+  }
+
+  .inline-explanation {
+    display: block;
+    margin: 6px 0 0 0;
+    max-width: 100%;
+  }
+
+  .iterArrayBox {
+    padding: 10px;
+  }
+
+  .iterArrayBox .fib-array {
+    max-height: 180px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  #modeSelectionContainer h1 {
+    font-size: 1.5rem;
+  }
+
+  #modeSelectionContainer p {
+    font-size: 0.98rem;
+    margin-bottom: 18px;
+  }
+
+  .modeTitle {
+    font-size: 1.05rem;
+  }
+
+  .modeDesc {
+    font-size: 0.8rem;
+  }
+
+  .fib-cell {
+    min-width: 46px;
+    min-height: 46px;
+    padding: 6px;
+    font-size: 0.78rem;
+  }
+
+  .code-block {
+    font-size: 0.76rem;
+    padding: 12px;
+  }
+
+  #iterativeState {
+    padding: 12px;
+  }
+
+  #iterativeStateTable td {
+    padding: 4px 6px;
+    font-size: 0.74rem;
   }
 }
 

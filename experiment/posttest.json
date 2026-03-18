@@ -5,51 +5,51 @@
       "question": "In the recursive visualization of fib(5), why do multiple nodes with the same label (e.g., f(2)) appear?",
       "answers": {
         "a": "Because Fibonacci numbers repeat in the sequence",
-        "b": "Because the recursive function recomputes the same subproblems",
-        "c": "Because the visualization duplicates nodes for clarity",
-        "d": "Because f(2) is a base case"
+        "b": "Because the visualization duplicates nodes for clarity",
+        "c": "Because f(2) is a base case",
+        "d": "Because the recursive function recomputes the same subproblems"
       },
       "explanations": {
         "a": "Repeating values do not automatically cause repeated calls.",
-        "b": "Recursive Fibonacci recalculates the same values, which appears as duplicate nodes.",
-        "c": "The visualization reflects real execution, not duplication.",
-        "d": "f(2) is not a base case."
+        "b": "The visualization reflects real execution, not duplication.",
+        "c": "f(2) is not a base case.",
+        "d": "Recursive Fibonacci recalculates the same values, which appears as duplicate nodes."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "d",
       "difficulty": "beginner"
     },
     {
       "question": "When stepping through the recursive simulation, why does the call stack grow before any values are returned?",
       "answers": {
-        "a": "Because return statements execute first",
-        "b": "Because recursion must reach base cases before returning",
+        "a": "Because recursion must reach base cases before returning",
+        "b": "Because return statements execute first",
         "c": "Because Fibonacci values are stored later",
         "d": "Because the compiler delays execution"
       },
       "explanations": {
-        "a": "Return statements execute after recursive calls.",
-        "b": "Recursive calls keep stacking until a base case is reached.",
+        "a": "Recursive calls keep stacking until a base case is reached.",
+        "b": "Return statements execute after recursive calls.",
         "c": "Values are computed through returns, not storage.",
         "d": "This behavior is intrinsic to recursion."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "difficulty": "beginner"
     },
     {
       "question": "In the iterative Fibonacci simulation, how does the execution flow differ from the recursive version?",
       "answers": {
         "a": "It branches into two paths at each step",
-        "b": "It uses a single linear sequence of updates",
-        "c": "It repeatedly calls the same function",
+        "b": "It repeatedly calls the same function",
+        "c": "It uses a single linear sequence of updates",
         "d": "It creates a call tree internally"
       },
       "explanations": {
         "a": "Branching occurs only in recursion.",
-        "b": "Iterative Fibonacci updates values step by step in a loop.",
-        "c": "Iteration does not involve function calls.",
+        "b": "Iteration does not involve function calls.",
+        "c": "Iterative Fibonacci updates values step by step in a loop.",
         "d": "Iterative execution has no call tree."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
@@ -57,101 +57,101 @@
       "answers": {
         "a": "Both recursive and iterative",
         "b": "Only iterative",
-        "c": "Only recursive",
-        "d": "Neither"
+        "c": "Neither",
+        "d": "Only recursive"
       },
       "explanations": {
         "a": "Iterative execution does not branch.",
         "b": "Iterative Fibonacci follows a linear loop.",
-        "c": "Recursive Fibonacci naturally forms a branching call tree.",
-        "d": "Recursive clearly shows a tree."
+        "c": "Recursive clearly shows a tree.",
+        "d": "Recursive Fibonacci naturally forms a branching call tree."
       },
-      "correctAnswer": "c",
+      "correctAnswer": "d",
       "difficulty": "beginner"
     },
     {
       "question": "Why does the total number of calls grow rapidly in the recursive simulation as n increases?",
       "answers": {
-        "a": "Each function call creates two new calls except at base cases",
-        "b": "The stack size grows exponentially",
+        "a": "The stack size grows exponentially",
+        "b": "Each function call creates two new calls except at base cases",
         "c": "The loop runs many times",
         "d": "The visualization exaggerates execution"
       },
       "explanations": {
-        "a": "Each non-base call branches into two recursive calls.",
-        "b": "Stack depth grows linearly, not exponentially.",
+        "a": "Stack depth grows linearly, not exponentially.",
+        "b": "Each non-base call branches into two recursive calls.",
         "c": "Loops are used in iteration, not recursion.",
         "d": "The visualization mirrors real execution."
       },
-      "correctAnswer": "a",
+      "correctAnswer": "b",
       "difficulty": "intermediate"
     },
     {
       "question": "When comparing both simulations, which approach uses constant extra memory?",
       "answers": {
         "a": "Recursive",
-        "b": "Iterative",
-        "c": "Both",
-        "d": "Depends on input size"
+        "b": "Both",
+        "c": "Depends on input size",
+        "d": "Iterative"
       },
       "explanations": {
         "a": "Recursive Fibonacci uses stack memory.",
-        "b": "Iterative Fibonacci uses only a few variables.",
-        "c": "Memory usage differs significantly.",
-        "d": "Iterative memory usage remains constant."
+        "b": "Memory usage differs significantly.",
+        "c": "Iterative memory usage remains constant.",
+        "d": "Iterative Fibonacci uses only a few variables."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "d",
       "difficulty": "beginner"
     },
     {
       "question": "While observing both modes, why does the iterative simulation complete with far fewer steps?",
       "answers": {
-        "a": "Because it skips base cases",
-        "b": "Because it avoids repeated computations",
+        "a": "Because it avoids repeated computations",
+        "b": "Because it skips base cases",
         "c": "Because it uses recursion internally",
         "d": "Because it returns values earlier"
       },
       "explanations": {
-        "a": "Base cases are implicit in iteration.",
-        "b": "Iterative Fibonacci computes each value exactly once.",
+        "a": "Iterative Fibonacci computes each value exactly once.",
+        "b": "Base cases are implicit in iteration.",
         "c": "Iteration does not use recursion.",
         "d": "Returns are not applicable in loops."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "difficulty": "intermediate"
     },
     {
       "question": "If memoization were added to the recursive simulation, how would it compare visually to the iterative version?",
       "answers": {
         "a": "It would still show a full branching tree",
-        "b": "It would look closer to a linear flow",
-        "c": "It would become deeper",
+        "b": "It would become deeper",
+        "c": "It would look closer to a linear flow",
         "d": "It would remove base cases"
       },
       "explanations": {
         "a": "Memoization reduces duplicate branches.",
-        "b": "Eliminating repeated calls makes execution closer to iterative behavior.",
-        "c": "Depth does not increase.",
+        "b": "Depth does not increase.",
+        "c": "Eliminating repeated calls makes execution closer to iterative behavior.",
         "d": "Base cases are still needed."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "c",
       "difficulty": "intermediate"
     },
     {
       "question": "After using both simulations, which statement best summarizes the trade-off?",
       "answers": {
         "a": "Recursive is faster and simpler",
-        "b": "Iterative is faster but harder to understand",
-        "c": "Recursive is intuitive but inefficient, iterative is efficient but less visual",
-        "d": "Both approaches behave the same"
+        "b": "Recursive is intuitive but inefficient, iterative is efficient but less visual",
+        "c": "Both approaches behave the same",
+        "d": "Iterative is faster but harder to understand"
       },
       "explanations": {
         "a": "Recursive Fibonacci is slower.",
-        "b": "Iterative logic is straightforward.",
-        "c": "This matches what the simulations demonstrate.",
-        "d": "Their execution models differ significantly."
+        "b": "This matches what the simulations demonstrate.",
+        "c": "Their execution models differ significantly.",
+        "d": "Iterative logic is straightforward."
       },
-      "correctAnswer": "c",
+      "correctAnswer": "b",
       "difficulty": "intermediate"
     }
   ]
