@@ -1,6 +1,1 @@
-# References
-
-1. E. Balagurusamy,  
-   **Programming in C**, McGraw Hill Education, India.
-
-2. Introduction to Algorithms by Thomas H. Cormen
+1. Y. Langsam, M. Augenstein and A. Tenenbaum, Data Structures using C and C++, 2nd Edition (2000), Prentice Hall (Chapter 3, Recursion)
