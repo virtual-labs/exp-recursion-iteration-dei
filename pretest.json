@@ -1,0 +1,90 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the Fibonacci series?",
+      "answers": {
+        "a": "A series where each number is the sum of the previous two numbers",
+        "b": "A series of prime numbers",
+        "c": "A series of even numbers only",
+        "d": "A series where each number is multiplied by 2"
+      },
+      "explanations": {
+        "a": "The Fibonacci series is defined such that each term is the sum of the two preceding terms.",
+        "b": "Prime numbers are unrelated to Fibonacci series.",
+        "c": "Fibonacci numbers include both even and odd numbers.",
+        "d": "This describes a geometric progression, not Fibonacci."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which of the following are the first two numbers of the Fibonacci series?",
+      "answers": {
+        "a": "1 and 2",
+        "b": "0 and 1",
+        "c": "2 and 4",
+        "d": "1 and 3"
+      },
+      "explanations": {
+        "a": "This is not the standard starting point of Fibonacci series.",
+        "b": "The Fibonacci series commonly starts with 0 and 1.",
+        "c": "These values do not form a Fibonacci sequence.",
+        "d": "These numbers are incorrect for Fibonacci series."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which programming concept allows a function to call itself?",
+      "answers": {
+        "a": "Iteration",
+        "b": "Looping",
+        "c": "Recursion",
+        "d": "Compilation"
+      },
+      "explanations": {
+        "a": "Iteration uses loops, not self-calling functions.",
+        "b": "Looping repeats code but does not involve function self-calls.",
+        "c": "Recursion is a technique where a function calls itself.",
+        "d": "Compilation translates code into machine language."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which loop is commonly used to generate the Fibonacci series iteratively?",
+      "answers": {
+        "a": "if-else",
+        "b": "switch",
+        "c": "for or while loop",
+        "d": "do-while only"
+      },
+      "explanations": {
+        "a": "Conditional statements do not generate sequences.",
+        "b": "Switch cases are not used for sequence generation.",
+        "c": "For and while loops are commonly used for iterative Fibonacci generation.",
+        "d": "Do-while can be used, but it is not the only option."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which approach generally executes faster for large Fibonacci numbers?",
+      "answers": {
+        "a": "Recursive approach",
+        "b": "Iterative approach",
+        "c": "Both take equal time",
+        "d": "Depends only on the compiler"
+      },
+      "explanations": {
+        "a": "Recursive Fibonacci is slower due to repeated calculations.",
+        "b": "Iterative Fibonacci avoids repeated computations and is faster.",
+        "c": "Execution time differs significantly.",
+        "d": "Compiler optimizations do not eliminate recursive overhead."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    }
+  ]
+}

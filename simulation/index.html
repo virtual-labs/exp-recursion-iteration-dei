@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <title>Fibonacci Iterative vs Recursive</title>
+  </head>
+  <body>
+    <!-- Mode Selection Screen -->
+       <div id="modeSelection">
+      <div id="modeSelectionContainer">
+         <p>Choose Fibonacci Approach:</p>
+         <div id="modeButtons">
+            <button class="modeBtn" data-mode="iterative">
+               <span class="modeIcon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                     <!-- Array/loop icon -->
+                     <rect x="3" y="8" width="4" height="8" fill="none" stroke="currentColor" stroke-width="2" />
+                     <rect x="10" y="8" width="4" height="8" fill="none" stroke="currentColor" stroke-width="2" />
+                     <rect x="17" y="8" width="4" height="8" fill="none" stroke="currentColor" stroke-width="2" />
+                  </svg>
+               </span>
+
+               <span class="modeTitle">Iterative Fibonacci</span>
+               <span class="modeDesc">Loop-based approach with O(n) time</span>
+            </button>
+
+            <button class="modeBtn" data-mode="recursive">
+               <span class="modeIcon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                     <!-- Tree/recursive icon -->
+                     <line x1="12" y1="7" x2="6" y2="13" stroke="currentColor" stroke-width="2" />
+                     <line x1="12" y1="7" x2="18" y2="13" stroke="currentColor" stroke-width="2" />
+                     <circle cx="12" cy="5" r="2" fill="currentColor" />
+                     <circle cx="6" cy="15" r="2" fill="currentColor" />
+                     <circle cx="18" cy="15" r="2" fill="currentColor" />
+                  </svg>
+               </span>
+
+               <span class="modeTitle">Recursive Fibonacci</span>
+               <span class="modeDesc">Tree-based approach with O(2ⁿ) time</span>
+            </button>
+         </div>
+      </div>
+   </div>
+
+    <div id="mainContainer" style="display: none;">
+       <button id="backToModeSelection">← Back</button>
+      <div id="container">
+
+         
+
+
+        <div id="mainPane">
+          <!-- ========================= Code Walkthrough ========================= -->
+          <div id="codeSection" class="pane">
+            <div class="leftPanel">
+              <h3 id="codeWalkthroughTitle">Iterative Fibonacci</h3>
+
+              <div class="controlGroup">
+                <label for="codeN">Value of n</label>
+                <input id="codeN" type="number" min="0" max="15" value="5" />
+                <small id="info-code">Keep n ≤ 15 for iterative approach.</small>
+              </div>
+
+              <div class="controlGroup">
+                <label for="codeSpeed">Speed</label>
+                <select id="codeSpeed">
+                  <option value="900">Slow</option>
+                  <option value="500" selected>Normal</option>
+                  <option value="200">Fast</option>
+                </select>
+              </div>
+
+              <div class="buttonsRow">
+                <button id="codePlayPause">Play</button>
+                <button id="codeNext">Next Line</button>
+                <button id="codeReset">Reset</button>
+              </div>
+
+              <div class="statusBox">
+                <div><strong>Step:</strong> <span id="codeStepLabel">0</span></div>
+                <p id="codeExplanation" class="codeExplanation-inline">
+                  Walk through the code line by line and observe variable changes.
+                </p>
+                <div hidden class="code-rec-state" id="partition-div"></div>
+
+                  <div hidden class="inlineInfo code-rec-state" >
+                    <span><strong>Current depth:</strong> <span id="recDepth">0</span></span>
+                    <span><strong>Max height:</strong> <span id="recMaxHeight">0</span></span>
+                  </div>
+                  <div hidden class="inlineInfo code-rec-state" >
+                    <span><strong>Total calls:</strong> <span id="recCallsCode">0</span></span>
+                    <span><strong>≈ Time:</strong> <span id="recTimeComplexity">O(2ⁿ)</span></span>
+                  </div>
+              </div>
+                 
+                  <div id="stack-container" hidden>
+                  <p id= "stack-heading" style="color:black">Call Stack</p>
+                  <div id="stackContainer" class="stackContainer"></div>
+                  </div>
+            </div>
+
+            <div class="rightPanel codePanel">
+              <!-- Row: Code + Iterative State -->
+              <div class="code-state-row" id="code-state-row">
+                <div id="code-area-div" class="codeArea">
+                <!-- Iterative code -->
+                <pre id="iterativeCode" class="code-block active"><code>
+int F(int n) {
+    if (n &lt;= 1)
+        return n;
+    int prev = 0;
+    int curr = 1;
+    int next;
+    for (int i = 2; i &lt;= n; i++) {
+        next = prev + curr;
+        prev = curr;
+        curr = next;
+    }
+    return curr;
+}</code></pre>
+
+                <!-- Recursive code -->
+<pre id="recursiveCode" class="code-block"><code>
+int F(int n) {
+    if (n &lt;= 1)
+        return n;
+
+    int left  = F(n - 1);
+    int right = F(n - 2);
+
+    return left + right;
+}
+</code></pre>
+                </div>
+
+
+              <!-- Iterative state - next to code -->
+<div id="iterativeState" class="stateBox active">
+
+  <div id="iterativeStateHeader">
+    Iterative State
+  </div>
+
+<table id="iterativeStateTable">
+  <tbody>
+    <tr>
+      <td><span class="var-name">n</span></td>
+      <td id="itVarN">-</td>
+    </tr>
+    <tr>
+      <td><span class="var-name">i</span></td>
+      <td id="itVarI">-</td>
+    </tr>
+    <tr>
+      <td><span class="var-name">prev</span></td>
+      <td id="itVarPrev">-</td>
+    </tr>
+    <tr>
+      <td><span class="var-name">curr</span></td>
+      <td id="itVarCurr">-</td>
+    </tr>
+    <tr>
+      <td><span class="var-name">next</span></td>
+      <td id="itVarNext">-</td>
+    </tr>
+    <tr>
+      <td><span class="var-name">iterations</span></td>
+      <td id="itIterations">0</td>
+    </tr>
+  </tbody>
+</table>
+
+
+  <div id="iterativeStateResult">
+    <span class="label">Return Value</span>
+    <span id="itResult" class="value">-</span>
+  </div>
+
+</div>
+              </div> <!-- end code-state-row -->
+
+              <!-- Animated Array for Iterative - centered at bottom -->
+              <div id="iterArrayContainer" class="iterArrayBox">
+                <div class="visInfoRow">
+                  <span><strong>Series:</strong> F(0), F(1), …, F(n)</span>
+                </div>
+                <div id="codeIterArray" class="fib-array"></div>
+              </div>
+
+              <div class="stateArea">
+
+<!-- <h4 hidden class="code-rec-state">Recursive Tree (Live)</h4> -->
+
+                <!-- Recursive state -->
+                <div id="recursiveState" class="stateBox" style="margin-top: 20px;">
+                  
+                  <div id="codeRecTree" class="tree"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ========================= End Code Walkthrough ========================= -->
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+  <script src="../assets/js/iframeResize.js"></script>
+        
+        </body>
+</html>
